@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ISKCON Nahan - Interactive Seva</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: url("https://i.pinimg.com/1200x/04/a8/8b/04a88b922e590ea608f1e2de03b76540.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #f5e79e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: -1;
+    }
+
+    /* Common Containers */
+    .screen {
+      max-width: 900px;
+      width: 90%;
+      background: rgba(0,0,0,0.85);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,215,0,0.5);
+      padding: 30px;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      transition: all 0.6s ease;
+    }
+    .hidden {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
+      pointer-events: none;
+    }
+
+    /* Main Menu */
+    .menu-title {
+      color: #ffd700;
+      text-shadow: 0 0 15px #ffdd55;
+      animation: glow 2s infinite alternate;
+      margin-bottom: 20px;
+    }
+    .nav-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .nav-card {
+      background: rgba(0,0,0,0.8);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      width: 180px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255,215,0,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .nav-card:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0 25px rgba(255,215,0,0.8);
+    }
+
+    /* Sections */
+    .section-content {
+      text-align: left;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+      transition: transform 0.3s;
+    }
+    .gallery img:hover { transform: scale(1.05); }
+
+    /* Form */
+    .form-group { margin: 15px 0; text-align: left; }
+    label { font-weight: bold; color: #ffd700; }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ffd700;
+      background: #111;
+      color: white;
+    }
+    button {
+      background: linear-gradient(45deg, #ffd700, #e67e22);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: transform 0.3s;
+    }
+    button:hover { transform: scale(1.05); }
+
+    /* Back Button */
+    .back-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background: #333;
+      color: #ffd700;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .back-btn:hover { background: #444; }
+
+    /* Animations */
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #ffd700; }
+      50% { text-shadow: 0 0 20px #ffdd55; }
+      100% { text-shadow: 0 0 5px #ffd700; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Menu -->
+  <div id="menu" class="screen">
+    <h1 class="menu-title">✨ ISKCON Centre Nahan ✨</h1>
+    <p>🌸 Choose what you wish to explore 🌸</p>
+    <div class="nav-cards">
+      <div class="nav-card" onclick="openSection('festivals')">🎉 Festivals</div>
+      <div class="nav-card" onclick="openSection('reminders')">🕉️ Reminders</div>
+      <div class="nav-card" onclick="openSection('lectures')">🎧 Lectures</div>
+      <div class="nav-card" onclick="openSection('donations')">🙏 Donations</div>
+    </div>
+  </div>
+
+  <!-- Festival Section -->
+<div id="festivals" class="screen hidden">
+  <h2>🎉 Recent Festivals</h2>
+  <div class="section-content">
+
+    <!-- Janmashtami Gallery -->
+    <h3>🌸 Janmashtami 2025</h3>
+    <div id="janmashtami-gallery" class="gallery-grid"></div>
+
+    <!-- Radhastami Gallery -->
+    <h3>🌸 Radhastami</h3>
+    <div id="radhastami-gallery" class="gallery-grid"></div>
+
+  </div>
+
+  <div class="back-btn" onclick="goBack()">⬅ Back</div>
+</div>
+
+
+  <!-- Reminders Section -->
+  <div id="reminders" class="screen hidden">
+    <h2>🕉️ Upcoming Events</h2>
+    <div class="section-content">
+      <ul>
+        <li>🌙 Next Ekadashi: 17 September 2025
+                               INDIRA EKADASHI
+        </li>
+        <li>📖 Sunday Program: Every Sunday 10:30AM - 1:30PM</li>
+        
+      </ul>
+    </div>
+    <div class="back-btn" onclick="goBack()">⬅ Back</div>
+  </div>
+
+  <!-- Lectures Section -->
+  <div id="lectures" class="screen hidden">
+    <h2>🎧 Recorded Lectures</h2>
+    <div class="section-content">
+     <ul>
+      <li><a href="static/lectures/राधाष्टमी कथा 2025.m4a"" target="_blank">🪔 Radhastami Katha</a></li>
+      
+     </ul>
+
+    </div>
+    <div class="back-btn" onclick="goBack()">⬅ Back</div>
+  </div>
+
+  <!-- Donation Section -->
+  <div id="donations" class="screen hidden">
+    <h2>🙏 Seva Donation</h2>
+    <form id="step1">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label>Place</label>
+        <input type="text" id="place" required>
+      </div>
+      <button type="submit">Proceed to Donation</button>
+    </form>
+
+    <div id="step2" class="hidden">
+      <p>📿 Scan this QR to make your seva contribution:</p>
+      <canvas id="upi-qr"></canvas>
+      <p><b>UPI ID:</b> amarroots@upi</p>
+      <button onclick="showStep3()">I Have Paid</button>
+    </div>
+
+    <form id="step3" class="hidden">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="text" id="phone" required>
+      </div>
+      <button type="submit">Submit & Get Thank You Letter</button>
+    </form>
+
+    <div id="step4" class="hidden">
+      <h3>🌸 Thank You for Your Seva 🌸</h3>
+      <p id="thankYouMsg"></p>
+    </div>
+
+    <div class="back-btn" onclick="goBack()">⬅ Back</div>
+  </div>
+
+  <script>
+    let currentSection = "menu";
+
+    function openSection(sectionId) {
+      document.getElementById(currentSection).classList.add("hidden");
+      document.getElementById(sectionId).classList.remove("hidden");
+      currentSection = sectionId;
+    }
+
+    function goBack() {
+      document.getElementById(currentSection).classList.add("hidden");
+      document.getElementById("menu").classList.remove("hidden");
+      currentSection = "menu";
+    }
+
+    // Donation logic
+    document.getElementById("step1").addEventListener("submit", function(e){
+      e.preventDefault();
+      document.getElementById("step1").classList.add("hidden");
+      document.getElementById("step2").classList.remove("hidden");
+      let upiString = "upi://pay?pa=amarroots@upi&pn=ISKCON%20Nahan&cu=INR";
+      new QRious({
+        element: document.getElementById("upi-qr"),
+        value: upiString,
+        size: 200
+      });
+    });
+
+    function showStep3(){
+      document.getElementById("step2").classList.add("hidden");
+      document.getElementById("step3").classList.remove("hidden");
+    }
+
+    document.getElementById("step3").addEventListener("submit", function(e){
+      e.preventDefault();
+      let donorData = {
+        name: document.getElementById("name").value,
+        place: document.getElementById("place").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value
+      };
+      fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(donorData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("step3").classList.add("hidden");
+        document.getElementById("step4").classList.remove("hidden");
+        document.getElementById("thankYouMsg").innerText = data.message;
+      });
+    });
+  </script>
+<script>
+function generateGallery(containerId, folderPath, totalImages, lightboxGroup, titlePrefix) {
+  const container = document.getElementById(containerId);
+
+  for (let i = 1; i <= totalImages; i++) {
+    const imgSrc = `${folderPath}${i}.jpg`;
+
+    const a = document.createElement('a');
+    a.href = imgSrc;
+    a.setAttribute('data-lightbox', lightboxGroup);
+    a.setAttribute('data-title', `${titlePrefix} ${i}`);
+
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.alt = titlePrefix;
+    img.loading = "lazy";
+
+    a.appendChild(img);
+    container.appendChild(a);
+  }
+}
+
+// Generate galleries automatically
+generateGallery("janmashtami-gallery", "static/images/festivals/janmashtami/janmashtami", 5, "janmashtami", "Janmashtami Celebration");
+generateGallery("radhastami-gallery", "static/images/festivals/radhastami/radhastami", 1, "radhastami", "Radhastami Celebration");
+</script>
+
+</body>
+</html>
