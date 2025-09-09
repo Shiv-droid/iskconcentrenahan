@@ -15,7 +15,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden; /* ⛔ no scroll on home */
     }
     body::before {
       content: "";
@@ -27,23 +27,23 @@
 
     /* Common Containers */
     .screen {
-      max-width: 900px;
-      width: 90%;
-      background: rgba(0,0,0,0.85);
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,215,0,0.5);
-      padding: 30px;
-      text-align: center;
-      position: absolute;
+      position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-      transition: all 0.6s ease;
+      transform: translate(-50%, -50%);
+      max-width: 1000px;
+      width: 95%;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: rgba(0,0,0,0.85);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,215,0,0.6);
+      padding: 35px;
+      text-align: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .hidden {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.9);
       pointer-events: none;
     }
 
@@ -57,22 +57,23 @@
     .nav-cards {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 25px;
       justify-content: center;
     }
     .nav-card {
       background: rgba(0,0,0,0.8);
-      border-radius: 15px;
-      padding: 20px;
+      border-radius: 18px;
+      padding: 25px;
       cursor: pointer;
-      width: 180px;
+      width: 200px;
       text-align: center;
-      box-shadow: 0 0 15px rgba(255,215,0,0.5);
+      font-size: 1.2rem;
+      box-shadow: 0 0 18px rgba(255,215,0,0.6);
       transition: transform 0.3s, box-shadow 0.3s;
     }
     .nav-card:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 0 25px rgba(255,215,0,0.8);
+      transform: translateY(-5px) scale(1.07);
+      box-shadow: 0 0 28px rgba(255,215,0,0.9);
     }
 
     /* Sections */
@@ -97,7 +98,7 @@
     label { font-weight: bold; color: #ffd700; }
     input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       border: 1px solid #ffd700;
       background: #111;
@@ -107,10 +108,11 @@
       background: linear-gradient(45deg, #ffd700, #e67e22);
       border: none;
       border-radius: 10px;
-      padding: 12px 20px;
+      padding: 14px 22px;
       cursor: pointer;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 12px;
+      font-size: 1rem;
       transition: transform 0.3s;
     }
     button:hover { transform: scale(1.05); }
@@ -121,12 +123,21 @@
       display: inline-block;
       background: #333;
       color: #ffd700;
-      padding: 8px 15px;
+      padding: 10px 18px;
       border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s;
     }
     .back-btn:hover { background: #444; }
+
+    /* Lecture links */
+    #lectures a {
+      color: #ffd700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #lectures a:hover { color: #fff; text-decoration: underline; }
 
     /* Animations */
     @keyframes glow {
@@ -151,34 +162,24 @@
   </div>
 
   <!-- Festival Section -->
-<div id="festivals" class="screen hidden">
-  <h2>🎉 Recent Festivals</h2>
-  <div class="section-content">
-
-    <!-- Janmashtami Gallery -->
-    <h3>🌸 Janmashtami 2025</h3>
-    <div id="janmashtami-gallery" class="gallery-grid"></div>
-
-    <!-- Radhastami Gallery -->
-    <h3>🌸 Radhastami</h3>
-    <div id="radhastami-gallery" class="gallery-grid"></div>
-
+  <div id="festivals" class="screen hidden">
+    <h2>🎉 Recent Festivals</h2>
+    <div class="section-content">
+      <h3>🌸 Janmashtami 2025</h3>
+      <div id="janmashtami-gallery" class="gallery-grid"></div>
+      <h3>🌸 Radhastami</h3>
+      <div id="radhastami-gallery" class="gallery-grid"></div>
+    </div>
+    <div class="back-btn" onclick="goBack()">⬅ Back</div>
   </div>
-
-  <div class="back-btn" onclick="goBack()">⬅ Back</div>
-</div>
-
 
   <!-- Reminders Section -->
   <div id="reminders" class="screen hidden">
     <h2>🕉️ Upcoming Events</h2>
     <div class="section-content">
       <ul>
-        <li>🌙 Next Ekadashi: 17 September 2025
-                               INDIRA EKADASHI
-        </li>
+        <li>🌙 Next Ekadashi: 17 September 2025 - INDIRA EKADASHI</li>
         <li>📖 Sunday Program: Every Sunday 10:30AM - 1:30PM</li>
-        
       </ul>
     </div>
     <div class="back-btn" onclick="goBack()">⬅ Back</div>
@@ -188,11 +189,9 @@
   <div id="lectures" class="screen hidden">
     <h2>🎧 Recorded Lectures</h2>
     <div class="section-content">
-     <ul>
-      <li><a href="static/lectures/राधाष्टमी कथा 2025.m4a"" target="_blank">🪔 Radhastami Katha</a></li>
-      
-     </ul>
-
+      <ul>
+        <li><a href="static/lectures/राधाष्टमी कथा 2025.m4a" target="_blank">🪔 Radhastami Katha</a></li>
+      </ul>
     </div>
     <div class="back-btn" onclick="goBack()">⬅ Back</div>
   </div>
@@ -243,6 +242,7 @@
     let currentSection = "menu";
 
     function openSection(sectionId) {
+      document.body.style.overflow = "auto"; // allow scroll for sections
       document.getElementById(currentSection).classList.add("hidden");
       document.getElementById(sectionId).classList.remove("hidden");
       currentSection = sectionId;
@@ -252,6 +252,7 @@
       document.getElementById(currentSection).classList.add("hidden");
       document.getElementById("menu").classList.remove("hidden");
       currentSection = "menu";
+      document.body.style.overflow = "hidden"; // remove scroll for home
     }
 
     // Donation logic
@@ -292,33 +293,21 @@
         document.getElementById("thankYouMsg").innerText = data.message;
       });
     });
+
+    // Galleries
+    function generateGallery(containerId, folderPath, totalImages, lightboxGroup, titlePrefix) {
+      const container = document.getElementById(containerId);
+      for (let i = 1; i <= totalImages; i++) {
+        const imgSrc = `${folderPath}${i}.jpg`;
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = titlePrefix;
+        img.loading = "lazy";
+        container.appendChild(img);
+      }
+    }
+    generateGallery("janmashtami-gallery", "static/images/festivals/janmashtami/janmashtami", 1, "janmashtami", "Janmashtami Celebration");
+    generateGallery("radhastami-gallery", "static/images/festivals/radhastami/radhastami", 1, "radhastami", "Radhastami Celebration");
   </script>
-<script>
-function generateGallery(containerId, folderPath, totalImages, lightboxGroup, titlePrefix) {
-  const container = document.getElementById(containerId);
-
-  for (let i = 1; i <= totalImages; i++) {
-    const imgSrc = `${folderPath}${i}.jpg`;
-
-    const a = document.createElement('a');
-    a.href = imgSrc;
-    a.setAttribute('data-lightbox', lightboxGroup);
-    a.setAttribute('data-title', `${titlePrefix} ${i}`);
-
-    const img = document.createElement('img');
-    img.src = imgSrc;
-    img.alt = titlePrefix;
-    img.loading = "lazy";
-
-    a.appendChild(img);
-    container.appendChild(a);
-  }
-}
-
-// Generate galleries automatically
-generateGallery("janmashtami-gallery", "static/images/festivals/janmashtami/janmashtami", 5, "janmashtami", "Janmashtami Celebration");
-generateGallery("radhastami-gallery", "static/images/festivals/radhastami/radhastami", 1, "radhastami", "Radhastami Celebration");
-</script>
-
 </body>
 </html>
