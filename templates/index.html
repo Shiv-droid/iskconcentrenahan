@@ -178,7 +178,7 @@
     <h2>🕉️ Upcoming Events</h2>
     <div class="section-content">
       <ul>
-        <li>🌙 Next Ekadashi: 17 September 2025 - INDIRA EKADASHI</li>
+        <li>🌙 Next Ekadashi: 17 September 2025 <br> INDIRA EKADASHI</br></li>
         <li>📖 Sunday Program: Every Sunday 10:30AM - 1:30PM</li>
       </ul>
     </div>
@@ -190,7 +190,7 @@
     <h2>🎧 Recorded Lectures</h2>
     <div class="section-content">
       <ul>
-        <li><a href="static/lectures/Vaishnav-Sadachar (1).mp3" target="_blank">🪔Vaishnav-Sadachar</a></li>
+        <li><a href="static/lectures/राधाष्टमी कथा 2025.m4a" target="_blank">🪔 Radhastami Katha</a></li>
       </ul>
     </div>
     <div class="back-btn" onclick="goBack()">⬅ Back</div>
@@ -213,19 +213,23 @@
 
     <div id="step2" class="hidden">
       <p>📿 Scan this QR to make your seva contribution:</p>
-      <canvas id="upi-qr"></canvas>
-      <p><b>UPI ID:</b> amarroots@upi</p>
+      <img src="static/images/upi/my_qr.jpg" 
+          alt="UPI QR Code" 
+          style="max-width:250px; border:2px solid #ccc; border-radius:10px;">
+      <p><b>UPI ID:</b><span id="upi-id"> manojpanwar17-1@oksbi</span></p>
+      <button onclick="copyUPI()">Copy UPI ID</button>
+      <br><br>
       <button onclick="showStep3()">I Have Paid</button>
     </div>
 
     <form id="step3" class="hidden">
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" required>
+        <label>Email(optional)</label>
+        <input type="email" id="email">
       </div>
       <div class="form-group">
-        <label>Phone</label>
-        <input type="text" id="phone" required>
+        <label>Phone(optional)</label>
+        <input type="text" id="phone">
       </div>
       <button type="submit">Submit & Get Thank You Letter</button>
     </form>
@@ -311,5 +315,3 @@
   </script>
 </body>
 </html>
-
-
